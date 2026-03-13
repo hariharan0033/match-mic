@@ -5,7 +5,9 @@ import { createCommentarySchema, listCommentaryQuerySchema } from "../validation
 import { db } from "../db/db.js";
 import { commentary } from "../db/schema.js";
 
-export const commentaryRouter = Router();
+const MAX_LIMIT = 100;
+
+export const commentaryRouter = Router({ mergeParams: true });
 
 commentaryRouter.get('/', async (req, res) => {
     const paramsResult = matchIdParamSchema.safeParse(req.params);
@@ -41,7 +43,8 @@ commentaryRouter.get('/', async (req, res) => {
 
 commentaryRouter.post('/', async (req, res) => {
     const paramsResult = matchIdParamSchema.safeParse(req.params);
-
+    console.log('Received params:', req.params);
+    console.log('Parsed params result:', paramsResult);
     if (!paramsResult.success) {
         return res.status(400).json({ error: 'Invalid match ID.', details: paramsResult.error.issues });
     }
