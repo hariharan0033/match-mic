@@ -46,6 +46,7 @@ async function loadSeedData() {
 async function fetchMatches(limit = 100) {
   const response = await fetch(`${API_URL}/matches?limit=${limit}`);
   if (!response.ok) {
+    console.log(response)
     throw new Error(`Failed to fetch matches: ${response.status}`);
   }
   const payload = await response.json();
